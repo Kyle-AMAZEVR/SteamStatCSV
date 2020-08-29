@@ -74,7 +74,7 @@ def SaveDailyPeakToDB():
 def SaveRealtimeDataToDB():
     # 상위 20개만 추출
     # 10개만 추출하고 싶다면 10으로 바꾸면됨
-    topcount=20
+    topcount=50
     print("Save Realtime Stat to DataBase Start")
     url = "https://store.steampowered.com/stats/Steam-Game-and-Player-Statistics"
     res= requests.get(url)
@@ -167,10 +167,11 @@ def CollectSteamStat():
     print("Collect stat End")
 
 
+
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=SaveRealtimeDataToDB, trigger="cron", minute="*/5", id="1")
-scheduler.add_job(func=SaveDailyPeakToDB, trigger="cron", hour="*/5", id="2")
-scheduler.add_job(func=CollectSteamStat, trigger="cron", minute="*/5", id="3")
+scheduler.add_job(func=SaveRealtimeDataToDB, trigger="cron", hour="*/1", id="1")
+scheduler.add_job(func=SaveDailyPeakToDB, trigger="cron", hour="*/1", id="2")
+scheduler.add_job(func=CollectSteamStat, trigger="cron", hour="*/1", id="3")
 scheduler.start()
 
 while True:
